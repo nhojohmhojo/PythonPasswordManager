@@ -27,9 +27,9 @@ class PasswordTable(ctk.CTkFrame):
         self.password_table.heading("Password", text="Password", anchor=CENTER)
         self.password_table.heading("Toggle", text="Toggle", anchor=CENTER)
         # Configure Row Height
-        self.style = ttk.Style(self)
-        self.style.configure('Treeview.Heading', rowheight=24, font=16)
-        self.style.configure('Treeview', rowheight=24, font=12)
+        # self.style = ttk.Style(self)
+        # self.style.configure('Treeview.Heading', rowheight=24, font=16)
+        # self.style.configure('Treeview', rowheight=24, font=12)
         # Scrollbar setup
         self.scrollbar = ctk.CTkScrollbar(self, orientation="vertical", command=self.password_table.yview)
         self.password_table.configure(yscrollcommand=self.scrollbar.set)

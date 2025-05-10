@@ -50,8 +50,10 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 ### Note ###
 - The macOS Script has not been tested and I am unware of any potential errors. 
 - If you are compiling on Ubuntu Linux, these scripts were written on a Windows machine, the editor may have saved it with Windows-style line endings ('s/\r$//').
-- Quick Fix: sudo apt install dos2unix
-- dos2unix UbuntuLinuxInstall.sh
+- Quick Fix: ```bash
+  sudo apt install dos2unix
+  dos2unix UbuntuLinuxInstall.sh
+  ```
 
 ---
 

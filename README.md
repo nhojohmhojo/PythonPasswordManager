@@ -46,6 +46,12 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 - Install all dependencies from `requirements.txt`
 - Use `pyinstaller` to build an executable (`--onefile` or `.app`)
 - Move or rename the build result to the project root for convenience
+-
+### Note ###
+- The macOS Script has not been tested and I am unware of any potential errors. 
+- If you are compiling on Ubuntu Linux, these scripts were written on a Windows machine, the editor may have saved it with Windows-style line endings ('s/\r$//').
+- Quick Fix: sudo apt install dos2unix
+- dos2unix UbuntuLinuxInstall.sh
 
 ---
 

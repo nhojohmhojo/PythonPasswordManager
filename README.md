@@ -29,6 +29,31 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 ---
 
 ## 🧰 Installation
+## 🧰 Build & Run as Executable
+
+This project includes platform-specific build scripts using **PyInstaller**. They generate both a `dist/` version and a renamed copy in the **project root** for easy access.
+
+| Platform     | Script                | Output Executable(s)                                               | Run Command                             |
+|--------------|------------------------|----------------------------------------------------------------------|------------------------------------------|
+| 🪟 Windows    | `WindowsInstall.bat`   | `dist/register_user.exe` and `Python Password Manager.exe` (root)   | `start "" "Python Password Manager.exe"` |
+| 🍎 macOS      | `MacOSInstall.sh`      | `dist/PythonPasswordManager.app` and copy in root                   | `open PythonPasswordManager.app`         |
+| 🐧 Linux      | `UbuntuLinuxInstall.sh`| `dist/register_user` and copy in root                               | `./register_user`                        |
+
+
+## 🧪 Development Setup (Optional)
+
+To run directly from source:
+
+```bash
+git clone https://github.com/yourusername/PythonPasswordManager.git
+cd PythonPasswordManager
+
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+pip install -r requirements.txt
+python app.py
+
 
 ### ✅ Requirements
 
@@ -36,10 +61,3 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 - pip
 
 ---
-
-### 🪟 Windows
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/yourusername/PythonPasswordManager.git
-   cd PythonPasswordManager

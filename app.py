@@ -46,12 +46,10 @@ class App(ctk.CTkToplevel):
 
         if mode == "Dark":
             style.theme_use("clam")
-            style.configure('Treeview.Heading', font=16)
-            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24, font=('Arial', 16))
+            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff")
         else:
             style.theme_use("default")
-            style.configure('Treeview.Heading', font=16)
-            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24, font=('Arial', 16))
+            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e")
 
         ctk.set_appearance_mode(mode)
         print(ttk.Style().theme_names())

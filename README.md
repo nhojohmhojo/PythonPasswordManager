@@ -40,6 +40,15 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 | 🐧 Linux      | `UbuntuLinuxInstall.sh`| `dist/register_user` and copy in root                               | `./register_user`                        |
 
 
+### ✅ Each script will:
+
+- Check for or create a virtual environment
+- Install all dependencies from `requirements.txt`
+- Use `pyinstaller` to build an executable (`--onefile` or `.app`)
+- Move or rename the build result to the project root for convenience
+
+---
+
 ## 🧪 Development Setup (Optional)
 
 To run directly from source:
@@ -54,6 +63,8 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 python register_user.py
 ```
+
+---
 
 ### ✅ Requirements
 

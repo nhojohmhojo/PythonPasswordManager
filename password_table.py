@@ -10,26 +10,8 @@ import customtkinter as ctk
 import csv
 from tkinter import filedialog, messagebox
 from utils import encrypt_password
+from components.form import Password, Base
 
-
-Base = declarative_base()
-
-class Password(Base):
-    __tablename__ = 'passwords'
-
-    id = Column(Integer, primary_key=True)
-    website = Column(String, nullable=False)
-    username = Column(String, nullable=False)
-    password = Column(String, nullable=False)
-
-
-    def __init__(self, website, username, password):
-        self.website = website
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f"<Password(website='{self.website}', username='{self.username}')>"
 
 # Custom Component Class PasswordTable
 class PasswordTable(ctk.CTkFrame):

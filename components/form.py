@@ -7,8 +7,27 @@ from tkinter import messagebox
 from tkinter import END, ttk
 import customtkinter as ctk
 from utils import encrypt_password, decrypt_password
-from sqlalchemy import create_engine
-from components.password_table import Base, Password
+from sqlalchemy import create_engine, Column, Intger, String, Integer, CHAR, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class Password(Base):
+    __tablename__ = 'passwords'
+
+    id = Column(Integer, primary_key=True)
+    website = Column(String, nullable=False)
+    username = Column(String, nullable=False)
+    password = Column(String, nullable=False)
+
+
+    def __init__(self, website, username, password):
+        self.website = website
+        self.username = username
+        self.password = password
+
+    def __repr__(self):
+        return f"<Password(website='{self.website}', username='{self.username}')>"
 
 # Custom Component Class CreatePassword
 class Form(ctk.CTkFrame):
@@ -54,15 +73,17 @@ class Form(ctk.CTkFrame):
         Base.metadata.create_all(engine)
 
     def populate_treeview(self):
-        connection = sqlite3.connect('passwords_db')
-        cursor = connection.cursor()
-        cursor.execute("SELECT website, username, password FROM passwords")
-        rows = cursor.fetchall()
+        engine = create_engine('sqlite:///passwords_db')
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        rows = session.query(Password.website, Password.username, Password.password).all()
 
         for website, username, encrypted_password in rows:
             item_id = self.password_table.insert('', 'end', values=(website, username, "••••••••", "Show"))
             self.password_visibility[item_id] = False
-        connection.close()
+
+        session.close()
 
     def handle_toggle_click(self, event):
         region = self.password_table.identify("region", event.x, event.y)
@@ -77,11 +98,12 @@ class Form(ctk.CTkFrame):
             values = self.password_table.item(row_id, "values")
             website, username, _, _ = values
 
-            connection = sqlite3.connect("passwords_db")
-            cursor = connection.cursor()
-            cursor.execute("SELECT password FROM passwords WHERE website=? AND username=?", (website, username))
-            result = cursor.fetchone()
-            connection.close()
+            # Use SQLAlchemy to query the password
+            engine = create_engine('sqlite:///passwords_db')
+            Session = sessionmaker(bind=engine)
+            session = Session()
+            result = session.query(Password.password).filter_by(website=website, username=username).first()
+            session.close()
 
             if result:
                 encrypted_password = result[0]

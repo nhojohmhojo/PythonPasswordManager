@@ -1,15 +1,13 @@
 """
-Description: generate_password.py - Custom Component Class GeneratPassword.
+Description: generate_password.py - Custom Component Class GeneratePassword.
 """
-import random
+import secrets
 import string
 import tkinter as tk
 import customtkinter as ctk
-from tkinter import CENTER, END, W, ttk
 
 
-
-# Custom Component Class GeneratPassword
+# Custom Component Class GeneratePassword
 class GeneratePassword(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
@@ -39,7 +37,6 @@ class GeneratePassword(ctk.CTkFrame):
         letters = string.ascii_letters
         digits = string.digits
         special = string.punctuation
-
         pool = letters
         if numbers:
             pool += digits
@@ -52,7 +49,7 @@ class GeneratePassword(ctk.CTkFrame):
         has_special = False
 
         while not meets_criteria or len(password) < min_length:
-            new_char = random.choice(pool)
+            new_char = secrets.choice(pool)
             password += new_char
 
             if new_char in digits:
@@ -67,9 +64,8 @@ class GeneratePassword(ctk.CTkFrame):
                 meets_criteria = meets_criteria and has_special
         
         password = list(password)
-        random.shuffle(password)
+        secrets.SystemRandom().shuffle(password)
         password = "".join(password[:min_length])
-
         self.generated_password.delete(0, "end")
         self.generated_password.insert(0, password)
     

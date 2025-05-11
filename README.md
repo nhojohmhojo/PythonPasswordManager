@@ -44,7 +44,7 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 
 - Check for or create a virtual environment
 - Install all dependencies from `requirements.txt`
-- Use `pyinstaller` to build an executable (`--onefile` or `.app`)
+- Use `pyinstaller` to build an executable (`.exe`,`.app` or `.bin`)
 - Move or rename the build result to the project root for convenience
 -
 ### Note ###

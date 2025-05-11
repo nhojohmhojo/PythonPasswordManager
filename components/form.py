@@ -7,7 +7,7 @@ from tkinter import messagebox
 from tkinter import END, ttk
 import customtkinter as ctk
 from utils import encrypt_password, decrypt_password
-from sqlalchemy import create_engine, Column, Intger, String, Integer, CHAR, sessionmaker
+from sqlalchemy import create_engine, Column, String, Integer, CHAR, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()

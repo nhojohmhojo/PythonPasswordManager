@@ -3,10 +3,7 @@ Name: John Roby
 Date: 10/22/2024
 Description: A password manager gui app.
 """
-import tkinter as tk
-from dataclasses import field
-from tkinter import ttk, PhotoImage
-
+from tkinter import ttk
 import customtkinter as ctk
 from components.header import Header
 from components.password_table import PasswordTable

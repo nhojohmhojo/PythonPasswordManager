@@ -3,3 +3,4 @@ cryptography
 pillow
 image
 pyinstaller
+sqlalchemy

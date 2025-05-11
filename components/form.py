@@ -7,6 +7,8 @@ from tkinter import messagebox
 from tkinter import END, ttk
 import customtkinter as ctk
 from utils import encrypt_password, decrypt_password
+from sqlalchemy import create_engine
+from components.password_table import Base, Password
 
 # Custom Component Class CreatePassword
 class Form(ctk.CTkFrame):
@@ -48,26 +50,18 @@ class Form(ctk.CTkFrame):
         self.populate_treeview()
 
     def setup_db(self):
-        connection = sqlite3.connect("passwords_db")
-        cursor = connection.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS passwords (
-                        id INT PRIMARY KEY,
-                        website TEXT NOT NULL,
-                        username TEXT NOT NULL,
-                        password BLOB NULL
-                    )''')
-        connection.commit()
-        connection.close()
+        engine = create_engine('sqlite:///passwords_db')
+        Base.metadata.create_all(engine)
 
     def populate_treeview(self):
-        connection = sqlite3.connect('passwords_db') 
+        connection = sqlite3.connect('passwords_db')
         cursor = connection.cursor()
-        cursor.execute("SELECT website, username, password FROM passwords")  
+        cursor.execute("SELECT website, username, password FROM passwords")
         rows = cursor.fetchall()
 
         for website, username, encrypted_password in rows:
             item_id = self.password_table.insert('', 'end', values=(website, username, "••••••••", "Show"))
-            self.password_visibility[item_id] = False 
+            self.password_visibility[item_id] = False
         connection.close()
 
     def handle_toggle_click(self, event):
@@ -108,17 +102,17 @@ class Form(ctk.CTkFrame):
         website = self.website_entry.get()
         username = self.username_entry.get()
         password = self.password_entry.get()
-    
+
         if not website or not username or not password:
             messagebox.showwarning("Missing Info", "Please fill out all fields.")
             return
-    
+
         encrypted_password = encrypt_password(password)
-    
+
         # Insert masked password and "Show" into Treeview
         item_id = self.password_table.insert(parent="", index="end", values=(website, username, "••••••••", "Show"))
         self.password_visibility[item_id] = False  # Track visibility for this row
-    
+
         # Save to DB
         connection = sqlite3.connect("passwords_db")
         cursor = connection.cursor()
@@ -128,7 +122,7 @@ class Form(ctk.CTkFrame):
         ''', (website, username, encrypted_password))
         connection.commit()
         connection.close()
-    
+
         # Clear entries
         self.website_entry.delete(0, END)
         self.username_entry.delete(0, END)

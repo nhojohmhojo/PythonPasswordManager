@@ -37,7 +37,7 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 |--------------|------------------------|----------------------------------------------------------------------|------------------------------------------|
 | 🪟 Windows    | `WindowsInstall.bat`   | `dist/register_user.exe` and `Python Password Manager.exe` (root)   | `start "" "Python Password Manager.exe"` |
 | 🍎 macOS      | `MacOSInstall.sh`      | `dist/PythonPasswordManager.app` and copy in root                   | `open PythonPasswordManager.app`         |
-| 🐧 Linux      | `UbuntuLinuxInstall.sh`| `dist/register_user` and copy in root                               | `./register_user`                        |
+| 🐧 Linux      | `UbuntuLinuxInstall.sh`| `dist/register_user` and copy in root                               | `./Python Password Manager`                        |
 
 
 ### ✅ Each script will:

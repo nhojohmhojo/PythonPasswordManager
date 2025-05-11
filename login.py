@@ -1,11 +1,19 @@
 """
 Description: login.py - Custom Component Class Login.
 """
-import sqlite3
 import customtkinter as ctk
-from tkinter import messagebox
 from PIL import ImageTk, Image
 from app import App
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from models import User, Base
+from utils import decrypt_password
+from tkinter import messagebox
+
+
+# Set up SQLAlchemy engine and session globally
+engine = create_engine('sqlite:///users_db')
+Session = sessionmaker(bind=engine)
 
 
 class Login(ctk.CTkToplevel):
@@ -40,36 +48,26 @@ class Login(ctk.CTkToplevel):
         self.bind('<Return>', lambda event: self.validate_login())
 
     def setup_db(self):
-        connection = sqlite3.connect("users_db")
-        cursor = connection.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                        username TEXT PRIMARY KEY,
-                        password TEXT NOT NULL
-                    )''')
-        connection.commit()
-        connection.close()
+        Base.metadata.create_all(engine)
 
     def validate_login(self):
-        from utils import decrypt_password
         username = self.username_entry.get()
         password = self.password_entry.get()
-        connection = sqlite3.connect("users_db")
-        cursor = connection.cursor()
-        cursor.execute("SELECT password FROM users WHERE username = ?", (username,))
-        row = cursor.fetchone()
-        connection.close()
 
-        if not row:
+        session = Session()
+        user = session.query(User).filter_by(username=username).first()
+        session.close()
+
+        if not user:
             messagebox.showerror("Error", "Invalid username or password.")
-        
-        encrypted_password = row[0]
+            return
 
         try:
-            decrypted_password = decrypt_password(encrypted_password)
+            decrypted_password = decrypt_password(user.password)
         except Exception as e:
             messagebox.showerror("Error", f"Could not validate password: {e}")
             return
-    
+
         if password == decrypted_password:
             self.open_app_window()
         else:
@@ -78,7 +76,7 @@ class Login(ctk.CTkToplevel):
     def open_app_window(self):
         App()
         self.withdraw()
-    
-        
+
+
 if __name__ == "__main__":
     Login().mainloop()

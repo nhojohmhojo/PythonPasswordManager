@@ -1,7 +1,6 @@
 """
 Description: form.py - Custom Component Class Form.
 """
-
 import sqlite3
 from tkinter import messagebox
 from tkinter import END, ttk
@@ -9,26 +8,7 @@ import customtkinter as ctk
 from utils import encrypt_password, decrypt_password
 from sqlalchemy import create_engine, Column, String, Integer, CHAR
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-class Password(Base):
-    __tablename__ = 'passwords'
-
-    id = Column(Integer, primary_key=True)
-    website = Column(String, nullable=False)
-    username = Column(String, nullable=False)
-    password = Column(String, nullable=False)
-
-
-    def __init__(self, website, username, password):
-        self.website = website
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f"<Password(website='{self.website}', username='{self.username}')>"
+from models import Password, Base
 
 # Custom Component Class CreatePassword
 class Form(ctk.CTkFrame):

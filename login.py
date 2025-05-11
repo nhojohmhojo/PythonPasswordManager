@@ -50,7 +50,7 @@ class Login(ctk.CTkToplevel):
         connection.close()
 
     def validate_login(self):
-        from components.form import decrypt_password
+        from utils import decrypt_password
         username = self.username_entry.get()
         password = self.password_entry.get()
         connection = sqlite3.connect("users_db")

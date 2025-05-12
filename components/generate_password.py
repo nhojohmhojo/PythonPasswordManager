@@ -7,6 +7,7 @@ import tkinter as tk
 import customtkinter as ctk
 
 
+
 # Custom Component Class GeneratePassword
 class GeneratePassword(ctk.CTkFrame):
     def __init__(self, parent):
@@ -37,6 +38,7 @@ class GeneratePassword(ctk.CTkFrame):
         letters = string.ascii_letters
         digits = string.digits
         special = string.punctuation
+
         pool = letters
         if numbers:
             pool += digits
@@ -66,6 +68,7 @@ class GeneratePassword(ctk.CTkFrame):
         password = list(password)
         secrets.SystemRandom().shuffle(password)
         password = "".join(password[:min_length])
+
         self.generated_password.delete(0, "end")
         self.generated_password.insert(0, password)
     

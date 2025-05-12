@@ -1,12 +1,13 @@
 """
 Description: register_user.py - Custom Component Class RegisterUser.
 """
-import sqlite3
+from models import create_tables
 import customtkinter as ctk
-from customtkinter import CTkImage, W
-from tkinter import messagebox, PhotoImage
-from PIL import ImageTk, Image
+from tkinter import messagebox
+from PIL import Image
 import re
+from sqlalchemy.exc import IntegrityError, OperationalError
+from models import Session, Users
 
 class RegisterUser(ctk.CTk):
     def __init__(self):
@@ -15,12 +16,11 @@ class RegisterUser(ctk.CTk):
         ctk.set_appearance_mode("system")
         ctk.set_default_color_theme("dark-blue")
         self.title('Registration')
-        # self.wm_iconbitmap("images/password_icon.ico")
         self.minsize(400, 500)
         self.maxsize(400, 500)
         # Grid Layout
-        self.columnconfigure((0,1,2,3,4,5), weight=1)
-        self.rowconfigure((0,1,2,3,4,5,6,7,8,9), weight=1)
+        self.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
+        self.rowconfigure((0, 1, 2, 3, 4, 5, 6, 7, 8, 9), weight=1)
         # Open and Resize Image
         self.image = Image.open("images/password_image.png")
         self.new_image = ctk.CTkImage(light_image=self.image, dark_image=self.image, size=(50, 50))
@@ -32,12 +32,12 @@ class RegisterUser(ctk.CTk):
     def create_widgets(self):
         self.image_label = ctk.CTkLabel(self, text="", image=self.new_image)
         self.image_label.grid(row=0, column=0)
-        
+
         self.create_username_label = ctk.CTkLabel(self, text="Create a username:", font=("Arial", 16, "bold"))
         self.create_username_label.grid(row=0, column=2)
         self.username_entry = ctk.CTkEntry(self)
         self.username_entry.grid(row=1, column=2)
-        
+
         self.create_password_label = ctk.CTkLabel(self, text="Create a password:", font=("Arial", 16, "bold"))
         self.create_password_label.grid(row=2, column=2)
         self.password_entry = ctk.CTkEntry(self, show="*")
@@ -56,18 +56,10 @@ class RegisterUser(ctk.CTk):
         self.login_link = ctk.CTkLabel(self, text="Login", text_color="blue", cursor="hand2")
         self.login_link.grid(row=9, column=2)
         self.login_link.bind("<Button-1>", self.open_app_window)
-        # Bind Enter key to Login
         self.bind('<Return>', lambda event: self.validate_registration())
 
     def setup_db(self):
-        connection = sqlite3.connect("users_db")
-        cursor = connection.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
-                        username TEXT PRIMARY KEY,
-                        password TEXT NOT NULL
-                    )''')
-        connection.commit()
-        connection.close()
+        create_tables()
 
     def validate_registration(self):
         username = self.username_entry.get()
@@ -86,57 +78,41 @@ class RegisterUser(ctk.CTk):
         if not re.match(r"^[A-Za-z0-9_]+$", username):
             messagebox.showwarning("Validation Error", "Username may only contain letters, digits and underscores.")
             return
-        
         if len(password) < 8:
-            messagebox.showwarning(
-                "Validation Error",
-                "Password must be at least 8 characters long."
-            )
+            messagebox.showwarning("Validation Error", "Password must be at least 8 characters long.")
             return
         if not re.search(r"[A-Z]", password):
-            messagebox.showwarning(
-                "Validation Error",
-                "Password must include at least one uppercase letter."
-            )
+            messagebox.showwarning("Validation Error", "Password must include at least one uppercase letter.")
             return
         if not re.search(r"[a-z]", password):
-            messagebox.showwarning(
-                "Validation Error",
-                "Password must include at least one lowercase letter."
-            )
+            messagebox.showwarning("Validation Error", "Password must include at least one lowercase letter.")
             return
         if not re.search(r"\d", password):
-            messagebox.showwarning(
-                "Validation Error",
-                "Password must include at least one digit."
-            )
+            messagebox.showwarning("Validation Error", "Password must include at least one digit.")
             return
         if not re.search(r"[!@#$%^&*()\-_=+\[\]{};:'\",.<>/?\\|`~]", password):
-            messagebox.showwarning(
-                "Validation Error",
-                "Password must include at least one special character."
-            )
-            return
-        
-        # Import the encryption function for passwords
-        from components.form import encrypt_password
-        encrypted_password = encrypt_password(password)
-        # Try inserting into the database
-        try:
-            with sqlite3.connect("users_db", timeout=10) as conn:
-                cursor = conn.cursor()
-                cursor.execute(
-                    "INSERT INTO users (username, password) VALUES (?, ?)",
-                    (username, encrypted_password)
-                )
-        except sqlite3.IntegrityError:
-            messagebox.showerror("Error", "That username is already taken.")
-            return
-        except sqlite3.OperationalError as e:
-            messagebox.showerror("Error", f"Database error: {e}")
+            messagebox.showwarning("Validation Error", "Password must include at least one special character.")
             return
 
-        # Success!
+        from components.form import encrypt_password
+        encrypted_password = encrypt_password(password)
+
+        try:
+            session = Session()
+            new_user = Users(username=username, password=encrypted_password)
+            session.add(new_user)
+            session.commit()
+        except IntegrityError:
+            session.rollback()
+            messagebox.showerror("Error", "That username is already taken.")
+            return
+        except OperationalError as e:
+            session.rollback()
+            messagebox.showerror("Error", f"Database error: {e}")
+            return
+        finally:
+            session.close()
+
         messagebox.showinfo("Success", "Registration complete. You can now log in.")
         self.open_app_window()
 
@@ -144,7 +120,6 @@ class RegisterUser(ctk.CTk):
         from login import Login
         Login()
         self.withdraw()
-
 
 if __name__ == "__main__":
     RegisterUser().mainloop()

@@ -4,6 +4,7 @@ Date: 10/22/2024
 Description: A password manager gui app.
 """
 from tkinter import ttk
+
 import customtkinter as ctk
 from components.header import Header
 from components.password_table import PasswordTable
@@ -43,10 +44,12 @@ class App(ctk.CTkToplevel):
 
         if mode == "Dark":
             style.theme_use("clam")
-            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff")
+            style.configure('Treeview.Heading', font=16)
+            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24, font=('Arial', 16))
         else:
             style.theme_use("default")
-            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e")
+            style.configure('Treeview.Heading', font=16)
+            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24, font=('Arial', 16))
 
         ctk.set_appearance_mode(mode)
         print(ttk.Style().theme_names())

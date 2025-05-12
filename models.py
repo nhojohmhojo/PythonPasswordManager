@@ -1,27 +1,48 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer
+import os
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 
+# Ensure the ./data directory exists
+os.makedirs("data", exist_ok=True)
+
+# Absolute path to the database file
+db_path = os.path.abspath(os.path.join("data", "users.db"))
+
+# Create SQLAlchemy engine
+engine = create_engine(f"sqlite:///{db_path}", echo=False)
+
+# Create a session factory
+Session = sessionmaker(bind=engine)
+
+# Base class for ORM models
 Base = declarative_base()
 
-class User(Base):
+
+# Define Users model
+class Users(Base):
     __tablename__ = 'users'
 
-    username = Column(String, primary_key=True)
+    id = Column(Integer, primary_key=True)
+    username = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
 
-class Password(Base):
+    # Optional relationship (if you want to use it later)
+    passwords = relationship("Passwords", back_populates="user", cascade="all, delete-orphan")
+
+
+# Define Password model
+class Passwords(Base):
     __tablename__ = 'passwords'
 
     id = Column(Integer, primary_key=True)
     website = Column(String, nullable=False)
     username = Column(String, nullable=False)
     password = Column(String, nullable=False)
+    profile = Column(Integer, ForeignKey('users.id'))
+
+    user = relationship("Users", back_populates="passwords")
 
 
-    def __init__(self, website, username, password):
-        self.website = website
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f"<Password(website='{self.website}', username='{self.username}')>"
+# Function to create all tables
+def create_tables():
+    Base.metadata.create_all(engine)

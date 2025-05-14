@@ -11,11 +11,11 @@ db_path = os.path.abspath(os.path.join("data", "users.db"))
 # Create SQLAlchemy engine
 engine = create_engine(f"sqlite:///{db_path}", echo=False)
 
-# Create a session factory
-Session = sessionmaker(bind=engine)
-
 # Base class for ORM models
 Base = declarative_base()
+
+# Create a session factory
+Session = sessionmaker(bind=engine)
 
 
 # Define Users model
@@ -27,7 +27,7 @@ class Users(Base):
     password = Column(String, nullable=False)
 
     # Optional relationship (if you want to use it later)
-    passwords = relationship("Passwords", back_populates="user", cascade="all, delete-orphan")
+    passwords = relationship("Passwords", back_populates="users", cascade="all, delete-orphan")
 
 
 # Define Password model
@@ -40,7 +40,7 @@ class Passwords(Base):
     password = Column(String, nullable=False)
     profile = Column(Integer, ForeignKey('users.id'))
 
-    user = relationship("Users", back_populates="passwords")
+    users = relationship("Users", back_populates="passwords")
 
 
 # Function to create all tables

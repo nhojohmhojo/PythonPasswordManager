@@ -57,4 +57,4 @@ start "" "%DST_EXE%"
 
 echo [DONE] Build complete. Shortcut created and app launched.
 endlocal
-pause
+exit

@@ -45,8 +45,8 @@ class Login(ctk.CTkToplevel):
 
         session = Session()
         try:
-            stmt = select(Users).where(Users.username == username)
-            result = session.execute(stmt).first()
+            select_statement = select(Users).where(Users.username == username)
+            result = session.execute(select_statement).first()
             user = result[0] if result else None
         except SQLAlchemyError as e:
             messagebox.showerror("Error", f"Database error: {e}")
@@ -56,9 +56,6 @@ class Login(ctk.CTkToplevel):
 
         if not user:
             messagebox.showerror("Error", "Invalid username or password.")
-            print("🔍 Username entered:", username)
-            print("🔍 Password entered:", password)
-            print("🔍 User row from DB:", user)
             return
 
         try:
@@ -71,9 +68,6 @@ class Login(ctk.CTkToplevel):
             self.open_app_window()
         else:
             messagebox.showerror("Error", "Invalid username or password.")
-            print("🔐 Decrypted password:", decrypted_password)
-            print("🔁 Match result:", password == decrypted_password)
-            print("📛 Raw comparison:", repr(password), "vs", repr(decrypted_password))
 
     def open_app_window(self):
         App()

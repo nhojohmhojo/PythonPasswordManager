@@ -2,7 +2,7 @@
 Description: form.py - Custom Component Class Form.
 """
 from sqlalchemy.exc import SQLAlchemyError
-from models import Passwords, Session as DBSession  # ORM model + session
+from models import Passwords, Session as DBSession
 from tkinter import messagebox
 from tkinter import END, ttk
 import customtkinter as ctk

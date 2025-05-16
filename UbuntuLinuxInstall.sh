@@ -6,7 +6,7 @@
 # === CONFIG ===
 APP_NAME="Python Password Manager"
 ENTRY_SCRIPT="register_user.py"
-ICON_PATH="images/password_image.png"   # PNG for Linux desktop files
+ICON_PATH="images/password_icon.png"   # PNG for Linux desktop files
 VENV_DIR="venv"
 DIST_DIR="dist"
 BUILD_DIR="build"
@@ -28,15 +28,20 @@ source "$VENV_DIR/bin/activate"
 echo "⬇️ Installing Python packages..."
 pip install --upgrade pip
 pip install -r requirements.txt
+# Ensure specific PIL internals are importable
+pip install Pillow customtkinter pyinstaller
 
 # === STEP 4: Clean previous builds ===
 echo "🧹 Cleaning old builds..."
 rm -rf "$DIST_DIR" "$BUILD_DIR" *.spec
 rm -f "$APP_NAME" "$DESKTOP_FILE"
 
-# === STEP 5: Build the app ===
+# === STEP 5: Build the app with PyInstaller (including Pillow internals) ===
 echo "⚙️ Building with PyInstaller..."
-pyinstaller --onefile --windowed --icon "$ICON_PATH" "$ENTRY_SCRIPT"
+pyinstaller "$ENTRY_SCRIPT" --onefile --windowed --icon "$ICON_PATH" \
+  --hidden-import=PIL._tkinter_finder \
+  --hidden-import=PIL.ImageTk \
+  --hidden-import=PIL.Image
 
 # === STEP 6: Rename binary ===
 if [ -f "$EXECUTABLE" ]; then
@@ -67,3 +72,4 @@ echo "🚀 Launching the app..."
 "./$APP_NAME"
 
 echo "✅ Done! Shortcut placed at: $DESKTOP_FILE"
+

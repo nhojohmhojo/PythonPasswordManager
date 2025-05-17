@@ -4,12 +4,11 @@ Date: 10/22/2024
 Description: A password manager gui app.
 """
 from tkinter import ttk
-
 import customtkinter as ctk
-from components.header import Header
-from components.password_table import PasswordTable
-from components.form import Form
-from components.generate_password import GeneratePassword
+from Components.header import Header
+from Components.password_table import PasswordTable
+from Components.form import Form
+from Components.generate_password import GeneratePassword
 
 # App class inherits tkinter
 class App(ctk.CTkToplevel):
@@ -52,7 +51,6 @@ class App(ctk.CTkToplevel):
             style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24, font=('Arial', 16))
 
         ctk.set_appearance_mode(mode)
-        print(ttk.Style().theme_names())
 
 
 if __name__ == "__main__":

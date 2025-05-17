@@ -5,12 +5,12 @@
 
 # === CONFIG ===
 APP_NAME="Python Password Manager"
-ENTRY_SCRIPT="register_user.py"
+ENTRY_SCRIPT="register.py"
 ICON_PATH="images/password_icon.png"   # PNG for Linux desktop files
 VENV_DIR="venv"
 DIST_DIR="dist"
 BUILD_DIR="build"
-EXE_NAME="register_user"
+EXE_NAME="register"
 EXECUTABLE="$DIST_DIR/$EXE_NAME"
 DESKTOP_FILE="$HOME/Desktop/$APP_NAME.desktop"
 

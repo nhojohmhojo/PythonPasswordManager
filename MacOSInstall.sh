@@ -5,12 +5,12 @@
 
 # === CONFIG ===
 APP_NAME="Python Password Manager"
-ENTRY_SCRIPT="register_user.py"
+ENTRY_SCRIPT="register.py"
 ICON_PATH="images/password_icon.icns"
 VENV_DIR="venv"
 DIST_DIR="dist"
 BUILD_DIR="build"
-EXE_NAME="register_user"
+EXE_NAME="register"
 APP_BUNDLE="$APP_NAME.app"
 
 # === Check: Warn if not executable ===

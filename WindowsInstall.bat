@@ -22,10 +22,10 @@ del /s /q *.spec 2>nul
 
 :: Step 5: Build app with PyInstaller
 echo Building the app...
-pyinstaller --onefile --windowed --icon "images\password_icon.ico" register_user.py
+pyinstaller --onefile --windowed --icon "images\password_icon.ico" register.py
 
 :: Step 6: Rename and copy EXE to project root
-copy /Y dist\register_user.exe "Python Password Manager.exe"
+copy /Y dist\register.exe "Python Password Manager.exe"
 
 :: Step 7: Create a desktop shortcut
 powershell -NoProfile -Command ^
@@ -39,4 +39,4 @@ powershell -NoProfile -Command ^
 start "" "Python Password Manager.exe"
 
 echo Done!
-pause
+exit

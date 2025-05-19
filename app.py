@@ -28,7 +28,7 @@ class App(ctk.CTkToplevel):
         self.generate_password = GeneratePassword(self)
         self.version_label = ctk.CTkLabel(self, text=f"v{__version__}")
         # Theme switch
-        self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="System")
+        self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
         # Place Components
         self.header.pack(pady=5)
         self.password_table.pack(fill="x")

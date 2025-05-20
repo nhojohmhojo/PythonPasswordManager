@@ -17,7 +17,7 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 - 🛠️ **Built-in Generator**: Quickly create strong, random passwords
 - 🌓 **Light/Dark Mode**: Instant toggle built into the interface
 - 💾 **Offline-Only**: No network access, your data stays with you
-- 📦 **Windows Support**: Comes with build scripts that uses PyInstaller for compiling on Windows
+- 📦 **Windows Support**: Comes with build script that uses PyInstaller for compiling on Windows
 
 ---
 

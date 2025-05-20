@@ -1,9 +1,9 @@
 """
 Description: header.py - Custom Component Class header.
 """
-from sqlalchemy.orm import Session
 import customtkinter as ctk
 from tkinter import messagebox
+from PIL import Image
 from database import Database
 
 # Custom Component Header
@@ -11,23 +11,27 @@ class Header(ctk.CTkFrame):
     def __init__(self, parent, password_table):
         super().__init__(parent)
         self.password_table = password_table
-        self.session = Session()
+        profile_image = Image.open("images/account.png")
+        resized_image = profile_image.resize((20, 20))
+        self.tk_image = ctk.CTkImage(light_image=resized_image, dark_image=resized_image)
         # Grid Layout
         self.rowconfigure(0, weight=1)
-        self.columnconfigure((0,1,2,3,4), weight=1)
+        self.columnconfigure((0,1,2,3,4,5,6,7), weight=1)
         # Create Widgets
         self.create_header_widgets()
 
     def create_header_widgets(self):
         """Creates and places header widgets"""
         self.search_entry = ctk.CTkEntry(self)
-        self.search_entry.grid(row=0, column=1)
+        self.search_entry.grid(row=0, column=1, columnspan=2, sticky="ew")
         self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
-        self.search_button.grid(row=0, column=2)
+        self.search_button.grid(row=0, column=3)
         self.clear_button = ctk.CTkButton(self, text="Clear", width=60, command=self.clear_search)
-        self.clear_button.grid(row=0, column=3, padx=5)
+        self.clear_button.grid(row=0, column=4)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
-        self.delete_button.grid(row=0, column=4)
+        self.delete_button.grid(row=0, column=5)
+        self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", corner_radius=50, command=self.logout)
+        self.logout_button.grid(row=0, column=7, sticky="w")
         # Bind Enter key to search
         self.search_entry.bind('<Return>', lambda event: self.search_treeview())
 
@@ -67,3 +71,17 @@ class Header(ctk.CTkFrame):
             messagebox.showerror("Error", f"Failed to delete record(s): {e}")
         finally:
             db.close()
+
+    def logout(self):
+        confirm = messagebox.askyesno("Logout", "Are you sure you want to logout?")
+        if confirm:
+            from login import Login
+            db = Database()
+            db.current_user = None
+            db.close()
+            self.winfo_toplevel().destroy()
+            try:
+                login_window = Login()
+                login_window.deiconify()
+            except AttributeError as e:
+                messagebox.showerror("Error", f"Failed to reopen login window:\n{e}")

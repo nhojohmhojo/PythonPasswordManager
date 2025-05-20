@@ -17,7 +17,7 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 - 🛠️ **Built-in Generator**: Quickly create strong, random passwords
 - 🌓 **Light/Dark Mode**: Instant toggle built into the interface
 - 💾 **Offline-Only**: No network access, your data stays with you
-- 📦 **Cross-platform Support**: Comes with build scripts that uses PyInstaller for compiling on Windows, macOS, and Linux
+- 📦 **Windows Support**: Comes with build scripts that uses PyInstaller for compiling on Windows
 
 ---
 
@@ -36,9 +36,6 @@ This project includes platform-specific build scripts using **PyInstaller**. The
 | Platform     | Script                | Output Executable(s)                                               | Run Command                             |
 |--------------|------------------------|----------------------------------------------------------------------|------------------------------------------|
 | 🪟 Windows    | `WindowsInstall.bat`   | `dist/register_user.exe` and `Python Password Manager.exe` (root)   | `start "" "Python Password Manager.exe"` |
-| 🍎 macOS      | `MacOSInstall.sh`      | `dist/PythonPasswordManager.app` and copy in root                   | `open PythonPasswordManager.app`         |
-| 🐧 Linux      | `UbuntuLinuxInstall.sh`| `dist/register_user` and copy in root                               | `./Python Password Manager`                        |
-
 
 ### ✅ Each script will:
 

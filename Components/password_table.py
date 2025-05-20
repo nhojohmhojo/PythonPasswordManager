@@ -19,7 +19,7 @@ class PasswordTable(ctk.CTkFrame):
         self.password_table.column("Website", anchor=CENTER, width=130)
         self.password_table.column("Username", anchor=CENTER, width=130)
         self.password_table.column("Password", anchor=CENTER, width=130)
-        self.password_table.column("Toggle", anchor=CENTER, width=45)
+        self.password_table.column("Toggle", anchor=CENTER, width=30)
         self.password_table.heading("Website", text="Website", anchor=CENTER)
         self.password_table.heading("Username", text="Username", anchor=CENTER)
         self.password_table.heading("Password", text="Password", anchor=CENTER)

@@ -12,43 +12,43 @@ from Components.generate_password import GeneratePassword
 
 # App class inherits tkinter
 class App(ctk.CTkToplevel):
-    def __init__(self):
+    def __init__(self, login_window):
         super().__init__()
         __version__ = "0.0.1"
         self.title('Password Manager')
         self.minsize(550, 660)
         self.maxsize(550, 660)
+        self.login_window = login_window
         # Set default theme
-        ctk.set_appearance_mode("system")  # Options: "Light", "Dark", "System"
+        ctk.set_appearance_mode("Light")  # Options: "Light", "Dark", "System"
         ctk.set_default_color_theme("dark-blue")
         # Initialize components
         self.password_table = PasswordTable(self)
-        self.header = Header(self, self.password_table.password_table)
+        self.header = Header(self, login_window=self.login_window, password_table=self.password_table.password_table)
         self.form = Form(self, self.password_table.password_table)
         self.generate_password = GeneratePassword(self)
         self.version_label = ctk.CTkLabel(self, text=f"v{__version__}")
-        # Theme switch
-        self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="System")
+        # Dark Mode Switch
+        self.dark_mode_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
         # Place Components
         self.header.pack(anchor="ne", pady=1)
         self.password_table.pack(fill="x")
         self.form.pack(fill="x")
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)
-        self.theme_switch.pack()
+        self.dark_mode_switch.pack()
         self.version_label.pack(side="bottom")
 
     def toggle_theme(self):
         style = ttk.Style()
-        mode = self.theme_switch.get()
-
+        mode = self.dark_mode_switch.get()
         if mode == "Dark":
             style.theme_use("clam")
             style.configure('Treeview.Heading', font=16)
-            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24, font=('Arial', 16))
-        else:
+            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24)
+        elif mode == "Light":
             style.theme_use("default")
             style.configure('Treeview.Heading', font=16)
-            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24, font=('Arial', 16))
+            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24)
 
         ctk.set_appearance_mode(mode)
 

@@ -53,7 +53,6 @@ class Database:
 
     def __init__(self):
         # Define Session
-
         self.session = Session()
 
     def add_user(self, new_user):

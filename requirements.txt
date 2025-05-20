@@ -1,7 +1,8 @@
-customtkinter
-cryptography
-bcrypt
-pillow
+customtkinter~=5.2.2
+cryptography~=45.0.2
+bcrypt~=4.3.0
+pillow~=11.2.1
 image
 pyinstaller
-sqlalchemy
+sqlalchemy~=2.0.41
+ttkthemes~=3.2.2

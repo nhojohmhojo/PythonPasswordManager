@@ -6,17 +6,21 @@ from tkinter import messagebox
 from PIL import Image
 from database import Database
 
+
+
 # Custom Component Header
 class Header(ctk.CTkFrame):
-    def __init__(self, parent, password_table):
+    def __init__(self, parent, login_window, password_table):
         super().__init__(parent)
-        self.password_table = password_table
         logout_image = Image.open("images/account.png")
         resized_image = logout_image.resize((20, 20))
         self.tk_image = ctk.CTkImage(light_image=resized_image, dark_image=resized_image)
         # Grid Layout
         self.rowconfigure(0, weight=1)
         self.columnconfigure((0,1,2,3,4,5,6,7), weight=1)
+        # Other Attributes
+        self.login_window = login_window
+        self.password_table = password_table
         # Create Widgets
         self.create_header_widgets()
 
@@ -80,14 +84,12 @@ class Header(ctk.CTkFrame):
 
         confirm = messagebox.askyesno("Logout", "Are you sure you want to logout?")
         if confirm:
-            from login import Login
             db = Database()
             db.current_user = None
             db.close()
             self.winfo_toplevel().destroy()
             try:
-                login_window = Login()
-                login_window.deiconify()
+                self.login_window.deiconify()
             except AttributeError as e:
                 messagebox.showerror("Error", f"Failed to reopen login window:\n{e}")
         else:

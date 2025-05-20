@@ -9,6 +9,8 @@ from Components.header import Header
 from Components.password_table import PasswordTable
 from Components.form import Form
 from Components.generate_password import GeneratePassword
+from utils import center_window
+
 
 # App class inherits tkinter
 class App(ctk.CTkToplevel):
@@ -37,6 +39,9 @@ class App(ctk.CTkToplevel):
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)
         self.dark_mode_switch.pack()
         self.version_label.pack(side="bottom")
+        # Center window
+        self.center_window = center_window(self,550, 660)
+
 
     def toggle_theme(self):
         style = ttk.Style()

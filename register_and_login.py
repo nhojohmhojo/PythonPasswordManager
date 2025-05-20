@@ -7,6 +7,7 @@ from PIL import Image
 import re
 from sqlalchemy.exc import OperationalError, SQLAlchemyError
 from database import create_tables, User, Database
+from utils import center_window
 
 
 class RegisterAndLogin(ctk.CTk):
@@ -29,6 +30,8 @@ class RegisterAndLogin(ctk.CTk):
         self.show_frame(self.login_frame)
         # Setup Database
         create_tables()
+        # Center Window
+        self.center_window = center_window(self, 400, 500)
 
     def show_frame(self, frame):
         self.unbind("<Return>")
@@ -120,7 +123,7 @@ class RegisterAndLogin(ctk.CTk):
         self.button.grid(row=6, column=2)
 
         self.already_a_user = ctk.CTkLabel(self.register_frame, text="Already a user?")
-        self.already_a_user.grid(row=7, column=2)
+        self.already_a_user.grid(row=7, column=2, sticky="s")
         self.login_link = ctk.CTkLabel(self.register_frame, text="Login", text_color="blue", cursor="hand2")
         self.login_link.grid(row=8, column=2)
         self.login_link.bind("<Button-1>", lambda event: self.show_frame(self.login_frame))

@@ -73,6 +73,12 @@ class Header(ctk.CTkFrame):
             db.close()
 
     def logout(self):
+        # Disable the logout button if necessary
+        try:
+            self.logout_button.configure(state="disabled")
+        except AttributeError:
+            messagebox.showwarning("Warning", "Logout button not found. Proceeding anyway.")  # in case the button reference isn't available
+
         confirm = messagebox.askyesno("Logout", "Are you sure you want to logout?")
         if confirm:
             from login import Login
@@ -85,3 +91,9 @@ class Header(ctk.CTkFrame):
                 login_window.deiconify()
             except AttributeError as e:
                 messagebox.showerror("Error", f"Failed to reopen login window:\n{e}")
+        else:
+            # Re-enable logout button if user cancels
+            try:
+                self.logout_button.configure(state="normal")
+            except AttributeError:
+                messagebox.showwarning("Warning", "Logout button not found. Cannot re-enable.")

@@ -31,26 +31,18 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 ## 🧰 Installation
 ## 🧰 Build & Run as Executable
 
-This project includes platform-specific build scripts using **PyInstaller**. They generate both a `dist/` version and a renamed copy in the **project root** for easy access.
+This project includes a Windows build script using **PyInstaller**. It generates both a `dist/` version and a renamed copy in the **project root** for easy access.
 
 | Platform     | Script                | Output Executable(s)                                               | Run Command                             |
 |--------------|------------------------|----------------------------------------------------------------------|------------------------------------------|
 | 🪟 Windows    | `WindowsInstall.bat`   | `dist/register_user.exe` and `Python Password Manager.exe` (root)   | `start "" "Python Password Manager.exe"` |
 
-### ✅ Each script will:
+### ✅ The script will:
 
 - Check for or create a virtual environment
 - Install all dependencies from `requirements.txt`
-- Use `pyinstaller` to build an executable (`.exe`,`.app` or `.bin`)
+- Use `pyinstaller` to build an executable (`.exe`)
 - Move or rename the build result to the project root for convenience
-### Note ###
-- The macOS Script has not been tested and I am unaware of any potential errors. 
-- If you are compiling on Ubuntu Linux, these scripts were written on a Windows machine, the editor may have saved it with Windows-style line endings ('s/\r$//').
-- Quick Fix:
-  ```bash
-  sudo apt install dos2unix
-  dos2unix UbuntuLinuxInstall.sh
-  ```
 
 ---
 

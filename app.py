@@ -30,7 +30,7 @@ class App(ctk.CTkToplevel):
         # Theme switch
         self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
         # Place Components
-        self.header.pack(pady=5)
+        self.header.pack(fill="x", pady=1)
         self.password_table.pack(fill="x")
         self.form.pack(fill="x")
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)

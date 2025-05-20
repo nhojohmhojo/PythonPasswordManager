@@ -30,7 +30,7 @@ class Header(ctk.CTkFrame):
         self.clear_button.grid(row=0, column=4)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
         self.delete_button.grid(row=0, column=5)
-        self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", corner_radius=50, command=self.logout)
+        self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", command=self.logout)
         self.logout_button.grid(row=0, column=7, sticky="w")
         # Bind Enter key to search
         self.search_entry.bind('<Return>', lambda event: self.search_treeview())

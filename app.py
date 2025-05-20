@@ -28,9 +28,9 @@ class App(ctk.CTkToplevel):
         self.generate_password = GeneratePassword(self)
         self.version_label = ctk.CTkLabel(self, text=f"v{__version__}")
         # Theme switch
-        self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
+        self.theme_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="System")
         # Place Components
-        self.header.pack(fill="x", pady=1)
+        self.header.pack(anchor="ne", pady=1)
         self.password_table.pack(fill="x")
         self.form.pack(fill="x")
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)
@@ -43,10 +43,12 @@ class App(ctk.CTkToplevel):
 
         if mode == "Dark":
             style.theme_use("clam")
-            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24)
+            style.configure('Treeview.Heading', font=16)
+            style.configure("Treeview", fieldbackground="#1e1e1e", background="#1e1e1e", foreground="#ffffff", rowheight=24, font=('Arial', 16))
         else:
             style.theme_use("default")
-            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24)
+            style.configure('Treeview.Heading', font=16)
+            style.configure("Treeview", fieldbackground="#ffffff", background="#ffffff", foreground="#1e1e1e", rowheight=24, font=('Arial', 16))
 
         ctk.set_appearance_mode(mode)
 

@@ -11,27 +11,27 @@ class Header(ctk.CTkFrame):
     def __init__(self, parent, password_table):
         super().__init__(parent)
         self.password_table = password_table
-        profile_image = Image.open("images/account.png")
-        resized_image = profile_image.resize((20, 20))
+        logout_image = Image.open("images/account.png")
+        resized_image = logout_image.resize((20, 20))
         self.tk_image = ctk.CTkImage(light_image=resized_image, dark_image=resized_image)
         # Grid Layout
         self.rowconfigure(0, weight=1)
-        self.columnconfigure((0,1,2,3,4,5,6,7,8), weight=1)
+        self.columnconfigure((0,1,2,3,4,5,6,7), weight=1)
         # Create Widgets
         self.create_header_widgets()
 
     def create_header_widgets(self):
         """Creates and places header widgets"""
         self.search_entry = ctk.CTkEntry(self)
-        self.search_entry.grid(row=0, column=1, columnspan=2, sticky="ew")
+        self.search_entry.grid(row=0, column=0, columnspan=2, sticky="ew")
         self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
-        self.search_button.grid(row=0, column=3)
+        self.search_button.grid(row=0, column=2)
         self.clear_button = ctk.CTkButton(self, text="Clear", width=60, command=self.clear_search)
-        self.clear_button.grid(row=0, column=4, padx=5)
+        self.clear_button.grid(row=0, column=3, padx=5)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
-        self.delete_button.grid(row=0, column=5)
+        self.delete_button.grid(row=0, column=4)
         self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", command=self.logout)
-        self.logout_button.grid(row=0, column=8, sticky="e")
+        self.logout_button.grid(row=0, column=7, padx=(5, 0), sticky="e")
         # Bind Enter key to search
         self.search_entry.bind('<Return>', lambda event: self.search_treeview())
 
@@ -73,11 +73,10 @@ class Header(ctk.CTkFrame):
             db.close()
 
     def logout(self):
-        # Disable the logout button if necessary
         try:
             self.logout_button.configure(state="disabled")
         except AttributeError:
-            messagebox.showwarning("Warning", "Logout button not found. Proceeding anyway.")  # in case the button reference isn't available
+            messagebox.showwarning("Warning", "Logout button not found. Proceeding anyway.")
 
         confirm = messagebox.askyesno("Logout", "Are you sure you want to logout?")
         if confirm:
@@ -92,7 +91,6 @@ class Header(ctk.CTkFrame):
             except AttributeError as e:
                 messagebox.showerror("Error", f"Failed to reopen login window:\n{e}")
         else:
-            # Re-enable logout button if user cancels
             try:
                 self.logout_button.configure(state="normal")
             except AttributeError:

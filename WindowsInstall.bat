@@ -18,18 +18,23 @@ pip install -r requirements.txt
 echo Cleaning old builds...
 rmdir /s /q dist 2>nul
 rmdir /s /q build 2>nul
-del /s /q *.spec 2>nul
+del /q *.spec 2>nul
 
 :: Step 5: Build app with PyInstaller
 echo Building the app...
-pyinstaller --onefile --windowed --icon "images\password_icon.ico" register.py
+pyinstaller --onefile --windowed --icon="images\password_icon.ico" register_and_login.py
 
 :: Step 6: Rename and copy EXE to project root
-copy /Y dist\register.exe "Python Password Manager.exe"
+if exist dist\register_and_login.exe (
+    copy /Y dist\register_and_login.exe "Python Password Manager.exe"
+) else (
+    echo ERROR: Build failed. EXE not found.
+    exit /b 1
+)
 
 :: Step 7: Create a desktop shortcut
 powershell -NoProfile -Command ^
- "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%USERPROFILE%\Desktop\Python Password Manager.lnk'); ^
+ "$s = (New-Object -ComObject WScript.Shell).CreateShortcut('$env:USERPROFILE\Desktop\Python Password Manager.lnk'); ^
  $s.TargetPath = '%~dp0Python Password Manager.exe'; ^
  $s.WorkingDirectory = '%~dp0'; ^
  $s.IconLocation = '%~dp0images\password_icon.ico'; ^

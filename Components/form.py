@@ -18,7 +18,7 @@ class Form(tk.LabelFrame):
         self.password_table = password_table
         self.password_visibility = {}
         self.mode = "Create"
-        self.configure(text=self.mode, fg="teal", font=("Arial", 16))
+        self.configure(text=self.mode, fg="teal", relief="groove", font=("Arial", 16, "bold"))
         # Grid Layout
         self.rowconfigure(0, weight=1)
         self.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)

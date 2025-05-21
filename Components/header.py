@@ -4,13 +4,13 @@ Description: header.py - Custom Component Class header.
 import customtkinter as ctk
 from tkinter import messagebox
 from PIL import Image
-from database import Database
-
+from database import Database, Password
+from utils import decrypt_password, encrypt_password, COLOR_PALETTE
 
 
 # Custom Component Header
 class Header(ctk.CTkFrame):
-    def __init__(self, parent, login_window, password_table):
+    def __init__(self, parent, login_window, password_table, form):
         super().__init__(parent)
         logout_image = Image.open("images/account.png")
         resized_image = logout_image.resize((20, 20))
@@ -21,6 +21,9 @@ class Header(ctk.CTkFrame):
         # Other Attributes
         self.login_window = login_window
         self.password_table = password_table
+        self.form = form
+        self.editing_item_id = None
+        self.editing_record_id = None
         # Create Widgets
         self.create_header_widgets()
 
@@ -34,6 +37,8 @@ class Header(ctk.CTkFrame):
         self.clear_button.grid(row=0, column=3, padx=5)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
         self.delete_button.grid(row=0, column=4)
+        self.edit_button = ctk.CTkButton(self, text="Edit", width=60, command=self.edit_record)
+        self.edit_button.grid(row=0, column=5, padx=(5,0))
         self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", command=self.logout)
         self.logout_button.grid(row=0, column=7, padx=(5, 0), sticky="e")
         # Bind Enter key to search
@@ -76,6 +81,69 @@ class Header(ctk.CTkFrame):
         finally:
             db.close()
 
+    def edit_record(self):
+        selected = self.password_table.selection()
+        if not selected:
+            messagebox.showwarning("No selection", "Please select a record to edit.")
+            return
+
+        # Set Form mode
+        self.form.set_mode("Edit")
+        # Change the Edit button to Cancel
+        self.edit_button.configure(text="Cancel", command=self.cancel_edit)
+
+        item_id = selected[0]
+        item = self.password_table.item(item_id)
+        values = item.get("values", [])
+
+        if len(values) < 4:
+            messagebox.showerror("Error", "Incomplete record.")
+            return
+
+        record_id = values[0]
+        self.editing_item_id = item_id
+        self.editing_record_id = record_id
+
+        # Fill in website and username
+        self.form.website_entry.delete(0, 'end')
+        self.form.website_entry.insert(0, values[1])
+        self.form.username_entry.delete(0, 'end')
+        self.form.username_entry.insert(0, values[2])
+
+        db = Database()
+        try:
+            record = db.session.query(Password).filter_by(id=record_id).first()
+            if not record:
+                messagebox.showerror("Error", "Record not found in database.")
+                return
+
+            decrypted_password = decrypt_password(record.password)
+            self.form.password_entry.delete(0, 'end')
+            self.form.password_entry.insert(0, decrypted_password)
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Decryption failed:\n{e}")
+        finally:
+            db.close()
+
+    def cancel_edit(self):
+        # Clear form fields
+        self.form.website_entry.delete(0, 'end')
+        self.form.username_entry.delete(0, 'end')
+        self.form.password_entry.delete(0, 'end')
+
+        # Reset form mode
+        self.form.set_mode("Create")
+
+        # Restore Edit button to normal
+        self.edit_button.configure(text="Edit", command=self.edit_record)
+
+        # Clear editing state
+        if hasattr(self, 'editing_record_id'):
+            del self.editing_record_id
+        if hasattr(self, 'editing_item_id'):
+            del self.editing_item_id
+
     def logout(self):
         try:
             self.logout_button.configure(state="disabled")
@@ -97,3 +165,9 @@ class Header(ctk.CTkFrame):
                 self.logout_button.configure(state="normal")
             except AttributeError:
                 messagebox.showwarning("Warning", "Logout button not found. Cannot re-enable.")
+
+    def set_theme(self, palette):
+        self.configure(bg_color=palette["bg"])
+        for widget in self.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.configure(text_color=palette["fg"])

@@ -5,7 +5,7 @@ from tkinter import CENTER, ttk, messagebox
 import customtkinter as ctk
 from database import Database, Password
 from sqlalchemy.exc import SQLAlchemyError
-from utils import decrypt_password
+from utils import decrypt_password, COLOR_PALETTE
 
 class PasswordTable(ctk.CTkFrame):
     def __init__(self, parent):
@@ -26,14 +26,14 @@ class PasswordTable(ctk.CTkFrame):
         self.password_table.heading("Toggle", text="Toggle", anchor=CENTER)
         self.password_table["displaycolumns"] = ("Website", "Username", "Password", "Toggle")
         self.style = ttk.Style(self)
-        self.style.configure('Treeview.Heading', rowheight=24, font=18)
-        self.style.configure('Treeview', rowheight=24, font=18)
+        self.style.configure('Treeview.Heading', rowheight=24, font=14)
+        self.style.configure('Treeview', rowheight=24, font=12)
         self.scrollbar = ctk.CTkScrollbar(self, orientation="vertical", command=self.password_table.yview)
         self.password_table.configure(yscrollcommand=self.scrollbar.set)
         self.password_table.grid(row=0, column=0, sticky="nsew", padx=10)
         self.scrollbar.grid(row=0, column=1, sticky="ns")
         self.upload_button = ctk.CTkButton(self, text="Upload CSV", command=self.upload_csv)
-        self.upload_button.grid(row=1, column=0, columnspan=2)
+        self.upload_button.grid(row=1, column=0, pady=(0, 10), columnspan=2)
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.password_table.bind("<ButtonRelease-1>", self.handle_toggle_click)
@@ -153,3 +153,9 @@ class PasswordTable(ctk.CTkFrame):
             messagebox.showinfo("Success", f"Imported {count} record{'s' if count != 1 else ''}.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load CSV:{e}")
+
+    def set_theme(self, palette):
+        self.configure(bg_color=palette["bg"])
+        for widget in self.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.configure(text_color=palette["fg"])

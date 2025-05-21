@@ -5,6 +5,7 @@ import secrets
 import string
 import tkinter as tk
 import customtkinter as ctk
+from utils import COLOR_PALETTE
 
 
 # Custom Component Class GeneratePassword
@@ -76,3 +77,9 @@ class GeneratePassword(ctk.CTkFrame):
 
         self.generated_password.delete(0, "end")
         self.generated_password.insert(0, password)
+
+    def set_theme(self, palette):
+        self.configure(bg_color=palette["bg"])
+        for widget in self.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.configure(text_color=palette["fg"])

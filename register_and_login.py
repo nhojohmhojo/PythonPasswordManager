@@ -16,8 +16,8 @@ class RegisterAndLogin(ctk.CTk):
         # Set up Window
         self.minsize(400, 500)
         self.maxsize(400, 500)
-        self.title('Login')
         ctk.set_appearance_mode("Light")
+        self.title('Login')
         ctk.set_default_color_theme("dark-blue")
         # Load and resize Logo Image
         self.logo_image = Image.open("images/password_image.png")

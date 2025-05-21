@@ -44,9 +44,10 @@ class Form(tk.LabelFrame):
     def set_mode(self, mode):
         self.mode = mode
         if self.mode == "Edit":
-            self.configure(text=self.mode, fg="red", font=("Arial", 16))
+            self.configure(text=self.mode, fg="red", relief="groove", font=("Arial", 16, "bold"))
         elif self.mode == "Create":
-            self.configure(text=self.mode, fg="teal", font=("Arial", 16))
+            self.configure(text=self.mode, fg="teal", relief="groove", font=("Arial", 16, "bold"))
+    
     def save_values(self):
         website = self.website_entry.get().strip()
         username = self.username_entry.get().strip()

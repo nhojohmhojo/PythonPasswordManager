@@ -5,7 +5,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 from PIL import Image
 from database import Database, Password
-from utils import decrypt_password, encrypt_password, COLOR_PALETTE
+from utils import decrypt_password
 
 
 # Custom Component Header
@@ -118,7 +118,8 @@ class Header(ctk.CTkFrame):
                 messagebox.showerror("Error", "Record not found in database.")
                 return
 
-            decrypted_password = decrypt_password(record.password)
+            decrypted_password = decrypt_password(record.password, record.profile)
+            self.form.password_entry.configure(show="•" if self.form.password_entry.cget("show") == "•" else "•")
             self.form.password_entry.delete(0, 'end')
             self.form.password_entry.insert(0, decrypted_password)
 

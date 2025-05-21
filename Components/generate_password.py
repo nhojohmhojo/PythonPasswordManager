@@ -5,8 +5,6 @@ import secrets
 import string
 import tkinter as tk
 import customtkinter as ctk
-from utils import COLOR_PALETTE
-
 
 # Custom Component Class GeneratePassword
 class GeneratePassword(ctk.CTkFrame):

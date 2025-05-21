@@ -55,10 +55,10 @@ class Form(tk.LabelFrame):
             messagebox.showwarning("Missing Info", "Please fill in all fields.")
             return
 
-        encrypted_password = encrypt_password(password)
-
         # Ensure a user is logged in
         user = Database.current_user
+        encrypted_password = encrypt_password(password, user.id)
+
         if not user:
             messagebox.showerror("Error", "No user is logged in.")
             return

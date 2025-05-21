@@ -16,27 +16,30 @@ def check_password(plain_password: str, hashed_password) -> bool:
 
 # === ENCRYPTION FUNCTIONS (for saved passwords) ===
 
-KEY_DIR = "data"
-KEY_PATH = os.path.join(KEY_DIR, "secret.key")
+KEY_DIR = "data/keys"
 
-def load_key():
+def load_key(user_id: str) -> bytes:
     os.makedirs(KEY_DIR, exist_ok=True)
-    if not os.path.exists(KEY_PATH):
+    key_path = os.path.join(KEY_DIR, f"{user_id}.key")
+
+    if not os.path.exists(key_path):
         key = Fernet.generate_key()
-        with open(KEY_PATH, "wb") as f:
+        with open(key_path, "wb") as f:
             f.write(key)
     else:
-        with open(KEY_PATH, "rb") as f:
+        with open(key_path, "rb") as f:
             key = f.read()
     return key
 
-# Initialize Fernet
-fernet = Fernet(load_key())
+def get_fernet(user_id: str) -> Fernet:
+    return Fernet(load_key(user_id))
 
-def encrypt_password(password: str) -> str:
+def encrypt_password(password: str, user_id: str) -> str:
+    fernet = get_fernet(user_id)
     return fernet.encrypt(password.encode()).decode()
 
-def decrypt_password(encrypted_password: str) -> str:
+def decrypt_password(encrypted_password: str, user_id: str) -> str:
+    fernet = get_fernet(user_id)
     return fernet.decrypt(encrypted_password.encode()).decode()
 
 # === WINDOW FUNCTIONS ===

@@ -5,7 +5,7 @@ from tkinter import CENTER, ttk, messagebox
 import customtkinter as ctk
 from database import Database, Password
 from sqlalchemy.exc import SQLAlchemyError
-from utils import decrypt_password, COLOR_PALETTE
+from utils import decrypt_password
 
 class PasswordTable(ctk.CTkFrame):
     def __init__(self, parent):
@@ -81,7 +81,7 @@ class PasswordTable(ctk.CTkFrame):
             db.close()
         if not entry: return
         try:
-            decrypted = decrypt_password(entry.password) if not visible else "••••••••"
+            decrypted = decrypt_password(entry.password, entry.profile) if not visible else "••••••••"
         except:
             decrypted = "[Error]"
         toggle = "Hide" if not visible else "Show"

@@ -141,7 +141,7 @@ class PasswordTable(ctk.CTkFrame):
                     continue
                 if not (website and username and password):
                     continue
-                encrypted = encrypt_password(password)
+                encrypted = encrypt_password(password, user.id)
                 entry = Password(website=website, username=username, password=encrypted, profile=user.id)
                 db.session.add(entry)
                 db.session.flush()

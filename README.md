@@ -5,7 +5,7 @@ A GUI built with Python for Password management.
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![GUI: CustomTkinter](https://img.shields.io/badge/GUI-CustomTkinter-lightgrey)](https://github.com/TomSchimansky/CustomTkinter)
 
-A secure and elegant desktop password manager built with Python and CustomTkinter. Designed for local, offline use — with encryption, dark/light themes, a built-in password generator, and CSV import support.
+A secure and elegant desktop password manager built with Python and CustomTkinter. Designed for local, offline use — with encryption, dark/light themes, a built-in password generator, and CSV import support. **For learning purposes only — not intended for storing real passwords**.
 
 ---
 

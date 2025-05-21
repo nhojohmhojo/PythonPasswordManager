@@ -7,8 +7,6 @@ from tkinter import END, ttk
 import customtkinter as ctk
 from database import Database, Password
 from utils import encrypt_password
-from utils import COLOR_PALETTE
-
 
 # Custom Component Class CreatePassword
 class Form(tk.LabelFrame):
@@ -30,7 +28,7 @@ class Form(tk.LabelFrame):
         self.username_entry = ctk.CTkEntry(self, placeholder_text="Username")
         self.password_entry = ctk.CTkEntry(self, placeholder_text="Password")
         self.password_entry.bind("<Button-1>", lambda event: self.password_entry.configure(show="") if self.password_entry.cget("show") == "•" else self.password_entry.configure(show="•"))
-        self.save_button = ctk.CTkButton(self, text="Save", width=60, command=self.save_values)
+        self.save_button = ctk.CTkButton(self, text="Save", width=60, fg_color="teal", text_color="white", hover_color="#148f77", command=self.save_values)
         # Placement
         self.website_entry.grid(row=1, column=1, padx=2.5, pady=10)
         self.username_entry.grid(row=1, column=2, padx=2.5, pady=10)
@@ -82,7 +80,9 @@ class Form(tk.LabelFrame):
                 del self.header.editing_record_id
                 del self.header.editing_item_id
                 self.set_mode("Create")
-                self.header.edit_button.configure(text="Edit", command=self.header.edit_record)
+                self.header.edit_button.configure(text="Edit", fg_color="teal", text_color="white", hover_color="#148f77", command=self.header.edit_record)
+                self.save_button.configure(text="Save", fg_color="teal", text_color="white", hover_color="#148f77", command=self.save_values)
+
             else: # === ADD NEW RECORD ===
                 new_entry = Password(website=website, username=username, password=encrypted_password, profile=user.id)
                 db.session.add(new_entry)

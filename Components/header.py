@@ -37,7 +37,7 @@ class Header(ctk.CTkFrame):
         self.clear_button.grid(row=0, column=3, padx=5)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
         self.delete_button.grid(row=0, column=4)
-        self.edit_button = ctk.CTkButton(self, text="Edit", width=60, command=self.edit_record)
+        self.edit_button = ctk.CTkButton(self, text="Edit", fg_color="teal", text_color="white", hover_color="#148f77", width=60, command=self.edit_record)
         self.edit_button.grid(row=0, column=5, padx=(5,0))
         self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", command=self.logout)
         self.logout_button.grid(row=0, column=7, padx=(5, 0), sticky="e")
@@ -90,7 +90,8 @@ class Header(ctk.CTkFrame):
         # Set Form mode
         self.form.set_mode("Edit")
         # Change the Edit button to Cancel
-        self.edit_button.configure(text="Cancel", command=self.cancel_edit)
+        self.edit_button.configure(text="Cancel", fg_color="#c0392b", text_color="white", hover_color="red", command=self.cancel_edit)
+        self.form.save_button.configure(text="Update", command=self.form.save_values)
 
         item_id = selected[0]
         item = self.password_table.item(item_id)
@@ -135,8 +136,10 @@ class Header(ctk.CTkFrame):
         # Reset form mode
         self.form.set_mode("Create")
 
-        # Restore Edit button to normal
-        self.edit_button.configure(text="Edit", command=self.edit_record)
+        # Restore Edit and Save button to normal
+        self.edit_button.configure(text="Edit", fg_color="teal", text_color="white", hover_color="#148f77", command=self.edit_record)
+        self.form.save_button.configure(text="Save", width=60, fg_color="teal", text_color="white", hover_color="#148f77", command=self.form.save_values)
+
 
         # Clear editing state
         if hasattr(self, 'editing_record_id'):

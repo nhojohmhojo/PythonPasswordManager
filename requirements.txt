@@ -6,3 +6,4 @@ image
 pyinstaller
 sqlalchemy~=2.0.41
 ttkthemes~=3.2.2
+pyperclip~=1.9.0

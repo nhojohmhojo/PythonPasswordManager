@@ -5,6 +5,8 @@ Description: A password manager gui app.
 """
 from tkinter import ttk
 import customtkinter as ctk
+from PIL.ImageOps import expand
+
 from Components.header import Header
 from Components.password_table import PasswordTable
 from Components.form import Form
@@ -26,17 +28,17 @@ class App(ctk.CTkToplevel):
         ctk.set_default_color_theme("dark-blue")
         # Initialize components
         self.password_table = PasswordTable(self)
-        self.header = Header(self, login_window=self.login_window, password_table=self.password_table.password_table, form=None)
-        self.form = Form(self, self.header, self.password_table.password_table)
-        self.header.form = self.form
         self.generate_password = GeneratePassword(self)
+        self.header = Header(self, login_window=self.login_window, password_table=self.password_table.password_table, form=None)
+        self.form = Form(self, self.header, self.password_table.password_table, self.generate_password.generated_password)
+        self.header.form = self.form
         self.version_label = ctk.CTkLabel(self, text=f"v{__version__}")
         # Dark Mode Switch
         self.dark_mode_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
         # Place Components
-        self.header.pack(anchor="ne", pady=1)
+        self.header.pack(anchor="ne", pady=5, ipady=5)
         self.password_table.pack(fill="x")
-        self.form.pack(fill="x", pady=(0, 0))
+        self.form.pack(fill="x")
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)
         self.dark_mode_switch.pack()
         self.version_label.pack(side="bottom")
@@ -58,7 +60,6 @@ class App(ctk.CTkToplevel):
                         foreground=palette["tree_fg"],
                         rowheight=24)
         style.configure("LabelFrame", background=palette["bg"], foreground=palette["fg"])
-
         # Apply to CustomTkinter components
         self.form.configure(bg=palette["bg"])
         self.form.set_theme(palette)

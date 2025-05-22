@@ -86,7 +86,6 @@ class Header(ctk.CTkFrame):
         if not selected:
             messagebox.showwarning("No selection", "Please select a record to edit.")
             return
-
         # Set Form mode
         self.form.set_mode("Edit")
         # Change the Edit button to Cancel

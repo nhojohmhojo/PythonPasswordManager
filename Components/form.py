@@ -2,18 +2,17 @@
 Description: form.py - Custom Component Class Form.
 """
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, Canvas
 from tkinter import END, ttk
 import customtkinter as ctk
 from database import Database, Password
 from utils import encrypt_password
+import pyperclip
 
 # Custom Component Class CreatePassword
 class Form(tk.LabelFrame):
-    def __init__(self, parent, header, password_table):
+    def __init__(self, parent, header, password_table, generated_password):
         super().__init__(parent)
-        self.header = header
-        self.password_table = password_table
         self.password_visibility = {}
         self.mode = "Create"
         self.configure(text=self.mode, fg="teal", relief="groove", font=("Arial", 16, "bold"))
@@ -23,17 +22,23 @@ class Form(tk.LabelFrame):
         # Style
         self.style = ttk.Style()
         self.style.configure("TButton", foreground="teal")
+        # Other Attributes
+        self.header = header
+        self.password_table = password_table
+        self.generated_password = generated_password
         # Widgets
         self.website_entry = ctk.CTkEntry(self, placeholder_text="Website URL")
         self.username_entry = ctk.CTkEntry(self, placeholder_text="Username")
         self.password_entry = ctk.CTkEntry(self, placeholder_text="Password")
         self.password_entry.bind("<Button-1>", lambda event: self.password_entry.configure(show="") if self.password_entry.cget("show") == "•" else self.password_entry.configure(show="•"))
+        self.paste_button = ctk.CTkButton(self, text="Paste", width=60, command=self.paste_password)
         self.save_button = ctk.CTkButton(self, text="Save", width=60, fg_color="teal", text_color="white", hover_color="#148f77", command=self.save_values)
         # Placement
         self.website_entry.grid(row=1, column=1, padx=2.5, pady=10)
         self.username_entry.grid(row=1, column=2, padx=2.5, pady=10)
         self.password_entry.grid(row=1, column=3, padx=2.5, pady=10)
-        self.save_button.grid(row=1, column=4, padx=5)
+        self.paste_button.grid(row=1, column=4)
+        self.save_button.grid(row=1, column=5, padx=5)
         # Enter key binding
         self.website_entry.bind('<Return>', lambda event: self.save_values())
         self.username_entry.bind('<Return>', lambda event: self.save_values())
@@ -46,6 +51,10 @@ class Form(tk.LabelFrame):
         elif self.mode == "Create":
             self.configure(text=self.mode, fg="teal", relief="groove", font=("Arial", 16, "bold"))
     
+    def paste_password(self):
+        self.password_entry.delete(0, "end")
+        self.password_entry.insert(0, pyperclip.paste())
+
     def save_values(self):
         website = self.website_entry.get().strip()
         username = self.username_entry.get().strip()

@@ -32,8 +32,8 @@ class PasswordTable(ctk.CTkFrame):
         self.password_table.configure(yscrollcommand=self.scrollbar.set)
         self.password_table.grid(row=0, column=0, sticky="nsew", padx=10)
         self.scrollbar.grid(row=0, column=1, sticky="ns")
-        self.upload_button = ctk.CTkButton(self, text="Upload CSV", command=self.upload_csv)
-        self.upload_button.grid(row=1, column=0, pady=(0, 10), columnspan=2)
+        self.upload_button = ctk.CTkButton(self, text="Import CSV", command=self.upload_csv)
+        self.upload_button.grid(row=1, column=0, columnspan=2)
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.password_table.bind("<ButtonRelease-1>", self.handle_toggle_click)
@@ -41,7 +41,7 @@ class PasswordTable(ctk.CTkFrame):
         self.populate_treeview()
 
     def populate_treeview(self):
-        # Clear existing rows & reset visibility
+        # Clear existing rows and reset visibility
         for iid in self.password_table.get_children():
             self.password_table.delete(iid)
         self.password_visibility.clear()

@@ -5,27 +5,24 @@ import secrets
 import string
 import tkinter as tk
 import customtkinter as ctk
+import pyperclip
 
 # Custom Component Class GeneratePassword
 class GeneratePassword(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
+
         # Create Widgets
         self.generated_password = ctk.CTkEntry(self)
-        self.button = ctk.CTkButton(self, text="Generate Password",
-                                    command=lambda: self.generate_password(self.length_label.cget("text"),
-                                                                           self.numbers_checkbox_var.get(),
-                                                                           self.special_characters_checkbox_var.get()))
+        self.button = ctk.CTkButton(self, text="Generate Password", command=lambda: self.generate_password(self.length_label.cget("text"), self.numbers_checkbox_var.get(), self.special_characters_checkbox_var.get()))
         self.slider = ctk.CTkSlider(self, from_=3, to=50, command=self.sliding)
         self.slider.set(16)
         self.length_label = ctk.CTkLabel(self, text=int(self.slider.get()))
         self.numbers_checkbox_var = tk.BooleanVar(value=True)
-        self.numbers_checkbox = ctk.CTkCheckBox(self, text="Numbers", variable=self.numbers_checkbox_var, onvalue=True,
-                                                offvalue=False)
+        self.numbers_checkbox = ctk.CTkCheckBox(self, text="Numbers", variable=self.numbers_checkbox_var, onvalue=True, offvalue=False)
         self.special_characters_checkbox_var = tk.BooleanVar(value=True)
-        self.special_characters_checkbox = ctk.CTkCheckBox(self, text="Special",
-                                                           variable=self.special_characters_checkbox_var, onvalue=True,
-                                                           offvalue=False)
+        self.special_characters_checkbox = ctk.CTkCheckBox(self, text="Special", variable=self.special_characters_checkbox_var, onvalue=True, offvalue=False)
+        self.copy_button = ctk.CTkButton(self, text="Copy", width=60, command=lambda: pyperclip.copy(self.generated_password.get()))
         # Place
         self.generated_password.pack(pady=10)
         self.button.pack()
@@ -33,6 +30,8 @@ class GeneratePassword(ctk.CTkFrame):
         self.slider.pack()
         self.numbers_checkbox.pack(pady=5)
         self.special_characters_checkbox.pack(pady=5)
+        self.copy_button.pack(pady=5)
+
 
     def sliding(self, value):
         self.length_label.configure(text=int(value))

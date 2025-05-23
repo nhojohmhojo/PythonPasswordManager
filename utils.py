@@ -55,7 +55,7 @@ def center_window(window, width, height):
 # === OTHER ===
 COLOR_PALETTE = {
     "Light": {
-        "bg": "#ffffff",
+        "bg": "gray90",
         "fg": "#1e1e1e",
         "tree_bg": "#ffffff",
         "tree_fg": "#1e1e1e",

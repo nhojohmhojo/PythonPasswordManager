@@ -6,6 +6,7 @@ Description: A password manager gui app.
 from tkinter import ttk
 import customtkinter as ctk
 from PIL.ImageOps import expand
+from django.db.backends.utils import split_identifier
 
 from Components.header import Header
 from Components.password_table import PasswordTable
@@ -24,6 +25,7 @@ class App(ctk.CTkToplevel):
         self.maxsize(550, 660)
         self.login_window = login_window
         # Set default theme
+        self.configure(background="gray9")
         ctk.set_appearance_mode("Light")  # Options: "Light", "Dark", "System"
         ctk.set_default_color_theme("dark-blue")
         # Initialize components
@@ -36,11 +38,11 @@ class App(ctk.CTkToplevel):
         # Dark Mode Switch
         self.dark_mode_switch = ctk.CTkSwitch(self, text="Dark Mode", command=self.toggle_theme, onvalue="Dark", offvalue="Light")
         # Place Components
-        self.header.pack(anchor="ne", pady=5, ipady=5)
-        self.password_table.pack(fill="x")
-        self.form.pack(fill="x")
+        self.header.pack(fill="y", anchor="ne", pady=5)
+        self.password_table.pack(fill="both")
+        self.form.pack(fill="both")
         self.generate_password.pack(fill="both", expand="true", ipady=10, ipadx=10)
-        self.dark_mode_switch.pack()
+        self.dark_mode_switch.pack(anchor="s")
         self.version_label.pack(side="bottom")
         # Center window
         self.center_window = center_window(self,550, 660)

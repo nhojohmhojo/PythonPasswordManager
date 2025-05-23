@@ -37,6 +37,7 @@ class PasswordTable(ctk.CTkFrame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.password_table.bind("<ButtonRelease-1>", self.handle_toggle_click)
+        self.configure(corner_radius=0)
         # Initial load
         self.populate_treeview()
 

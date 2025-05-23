@@ -17,32 +17,34 @@ class Header(ctk.CTkFrame):
         self.tk_image = ctk.CTkImage(light_image=resized_image, dark_image=resized_image)
         # Grid Layout
         self.rowconfigure(0, weight=1)
-        self.columnconfigure((0,1,2,3,4,5,6,7), weight=1)
+        self.columnconfigure((0,1,2,3,4,5,6,7,8,9), weight=1)
         # Other Attributes
         self.login_window = login_window
         self.password_table = password_table
         self.form = form
         self.editing_item_id = None
         self.editing_record_id = None
+        self.configure(corner_radius=0)
         # Create Widgets
         self.create_header_widgets()
 
     def create_header_widgets(self):
         """Creates and places header widgets"""
         self.search_entry = ctk.CTkEntry(self)
-        self.search_entry.grid(row=0, column=0, columnspan=2, sticky="ew")
+        self.search_entry.grid(row=0, column=0, columnspan=3, sticky="ew")
         self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
-        self.search_button.grid(row=0, column=2)
+        self.search_button.grid(row=0, column=3)
         self.clear_button = ctk.CTkButton(self, text="Clear", width=60, command=self.clear_search)
-        self.clear_button.grid(row=0, column=3, padx=5)
+        self.clear_button.grid(row=0, column=4, padx=5)
         self.delete_button =  ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
-        self.delete_button.grid(row=0, column=4)
+        self.delete_button.grid(row=0, column=5)
         self.edit_button = ctk.CTkButton(self, text="Edit", fg_color="teal", text_color="white", hover_color="#148f77", width=60, command=self.edit_record)
-        self.edit_button.grid(row=0, column=5, padx=(5,0))
+        self.edit_button.grid(row=0, column=6, padx=5)
         self.logout_button = ctk.CTkButton(self, text="", image=self.tk_image, width=10, fg_color="transparent", command=self.logout)
-        self.logout_button.grid(row=0, column=7, padx=(5, 0), sticky="e")
+        self.logout_button.grid(row=0, column=9, sticky="e")
         # Bind Enter key to search
         self.search_entry.bind('<Return>', lambda event: self.search_treeview())
+        print("Frame background color:", self.cget("fg_color"))
 
     def search_treeview(self):
         search_term = self.search_entry.get().lower()

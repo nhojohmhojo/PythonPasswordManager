@@ -11,7 +11,6 @@ import pyperclip
 class GeneratePassword(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-
         # Create Widgets
         self.generated_password = ctk.CTkEntry(self)
         self.button = ctk.CTkButton(self, text="Generate Password", command=lambda: self.generate_password(self.length_label.cget("text"), self.numbers_checkbox_var.get(), self.special_characters_checkbox_var.get()))
@@ -23,6 +22,7 @@ class GeneratePassword(ctk.CTkFrame):
         self.special_characters_checkbox_var = tk.BooleanVar(value=True)
         self.special_characters_checkbox = ctk.CTkCheckBox(self, text="Special", variable=self.special_characters_checkbox_var, onvalue=True, offvalue=False)
         self.copy_button = ctk.CTkButton(self, text="Copy", width=60, command=lambda: pyperclip.copy(self.generated_password.get()))
+        self.configure(corner_radius=0)
         # Place
         self.generated_password.pack(pady=10)
         self.button.pack()
@@ -31,7 +31,6 @@ class GeneratePassword(ctk.CTkFrame):
         self.numbers_checkbox.pack(pady=5)
         self.special_characters_checkbox.pack(pady=5)
         self.copy_button.pack(pady=5)
-
 
     def sliding(self, value):
         self.length_label.configure(text=int(value))

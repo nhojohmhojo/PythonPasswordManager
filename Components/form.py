@@ -15,13 +15,14 @@ class Form(tk.LabelFrame):
         super().__init__(parent)
         self.password_visibility = {}
         self.mode = "Create"
-        self.configure(text=self.mode, fg="teal", relief="groove", font=("Arial", 16, "bold"))
+        self.configure(text=self.mode, fg="teal", bg="#f9f9fa", relief="groove", font=("Arial", 16, "bold"))
         # Grid Layout
         self.rowconfigure(0, weight=1)
         self.columnconfigure((0, 1, 2, 3, 4, 5), weight=1)
         # Style
         self.style = ttk.Style()
         self.style.configure("TButton", foreground="teal")
+        self.configure(background="gray90")
         # Other Attributes
         self.header = header
         self.password_table = password_table
@@ -34,9 +35,9 @@ class Form(tk.LabelFrame):
         self.paste_button = ctk.CTkButton(self, text="Paste", width=60, command=self.paste_password)
         self.save_button = ctk.CTkButton(self, text="Save", width=60, fg_color="teal", text_color="white", hover_color="#148f77", command=self.save_values)
         # Placement
-        self.website_entry.grid(row=1, column=1, padx=2.5, pady=10)
-        self.username_entry.grid(row=1, column=2, padx=2.5, pady=10)
-        self.password_entry.grid(row=1, column=3, padx=2.5, pady=10)
+        self.website_entry.grid(row=1, column=1, padx=5, pady=10)
+        self.username_entry.grid(row=1, column=2, padx=(0,2.5), pady=10)
+        self.password_entry.grid(row=1, column=3, padx=(2.5,0), pady=10)
         self.paste_button.grid(row=1, column=4)
         self.save_button.grid(row=1, column=5, padx=5)
         # Enter key binding

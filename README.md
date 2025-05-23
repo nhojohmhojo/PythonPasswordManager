@@ -24,7 +24,7 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 ## 📷 Screenshots
 <img width="302" alt="Screenshot - Login" src="https://github.com/user-attachments/assets/630e3fa0-b0c4-4eb6-bb38-68906ad3544e" />
 <img width="302" alt="Screenshot - Register" src="https://github.com/user-attachments/assets/729eb1d9-ceb3-4cf3-9df8-561c3f1cbd55" />
-<img width="415" alt="Screenshot Password Manager - v0.0.1" src="https://github.com/user-attachments/assets/fe3e908e-3d77-49dd-8b65-f5d9e3bb43a3" />
+<img width="415" alt="Screenshot Password Manager - v0.0.1" src="https://github.com/user-attachments/assets/f5efb3bf-0ad0-4ab3-bbb9-f11ff0a54ecc" />
 
 ---
 

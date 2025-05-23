@@ -44,7 +44,6 @@ class Header(ctk.CTkFrame):
         self.logout_button.grid(row=0, column=7, sticky="e")
         # Bind Enter key to search
         self.search_entry.bind('<Return>', lambda event: self.search_treeview())
-        print("Frame background color:", self.cget("fg_color"))
 
     def search_treeview(self):
         search_term = self.search_entry.get().lower()

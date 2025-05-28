@@ -65,24 +65,17 @@ class Form(tk.LabelFrame):
             messagebox.showwarning("Missing Info", "Please fill in all fields.")
             return
 
-        # Ensure a user is logged in
         user = Database.current_user
-        encrypted_password = encrypt_password(password, user.id)
-
         if not user:
             messagebox.showerror("Error", "No user is logged in.")
             return
 
+        encrypted_password = encrypt_password(password, user.id)
         db = Database()
         try:
             if self.mode == "Edit" and hasattr(self.header, 'editing_record_id'):
-                # === UPDATE EXISTING RECORD ===
-                db.session.query(Password).filter_by(id=self.header.editing_record_id).update({
-                    Password.website: website,
-                    Password.username: username,
-                    Password.password: encrypted_password
-                })
-                db.session.commit()
+                # === UPDATE EXISTING RECORD USING update_password_entry ===
+                db.update_password_entry(entry_id=self.header.editing_record_id, new_website=website, new_username=username, new_password=encrypted_password)
 
                 # Update the selected item in the table
                 self.password_table.item(self.header.editing_item_id, values=(self.header.editing_record_id, website, username, "••••••••", "Show"))
@@ -93,7 +86,7 @@ class Form(tk.LabelFrame):
                 self.header.edit_button.configure(text="Edit", fg_color="teal", text_color="white", hover_color="#148f77", command=self.header.edit_record)
                 self.save_button.configure(text="Save", fg_color="teal", text_color="white", hover_color="#148f77", command=self.save_values)
 
-            else: # === ADD NEW RECORD ===
+            else:  # === ADD NEW RECORD ===
                 new_entry = Password(website=website, username=username, password=encrypted_password, profile=user.id)
                 db.session.add(new_entry)
                 db.session.flush()

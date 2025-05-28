@@ -97,6 +97,25 @@ class Database:
             self.session.rollback()
             raise
 
+    def update_password_entry(self, entry_id, new_website, new_username, new_password):
+        try:
+            entry = self.session.query(Password).get(entry_id)
+            if not entry:
+                raise ValueError("Password entry not found.")
+
+            if new_website:
+                entry.website = new_website
+            if new_username:
+                entry.username = new_username
+            if new_password:
+                entry.password = new_password  # Use hash_password(new_password) if needed
+
+            self.session.commit()
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
+
+
     def close(self):
         if self.session:
             self.session.close()

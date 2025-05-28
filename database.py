@@ -73,11 +73,12 @@ class Database:
             return user
         return None
 
-    def get_all_passwords(self):
-        return self.session.query(Password).all()
-
-    def get_entry_by_website_and_username(self, website, username):
-        return self.session.query(Password).filter_by(website=website, username=username).first()
+    def get_password_by_id(self, entry_id):
+        try:
+            return self.session.query(Password).get(entry_id)
+        except SQLAlchemyError:
+            self.session.rollback()
+            raise
 
     def add_password_entry(self, entry):
         try:

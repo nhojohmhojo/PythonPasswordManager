@@ -5,9 +5,6 @@ Description: A password manager gui app.
 """
 from tkinter import ttk
 import customtkinter as ctk
-from PIL.ImageOps import expand
-from django.db.backends.utils import split_identifier
-
 from Components.header import Header
 from Components.password_table import PasswordTable
 from Components.form import Form

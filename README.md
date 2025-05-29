@@ -13,7 +13,7 @@ A secure and elegant desktop password manager built with Python and CustomTkinte
 
 - 🔍 **Search**: View entries in a sortable table
 - 🔒 **Secure Storage**: All passwords are encrypted with Fernet (AES-based)
-- 📁 **CSV Upload**: Import large sets of credentials with ease
+- 📁 **CSV Import**: Import large sets of credentials with ease
 - 🛠️ **Built-in Generator**: Quickly create strong, random passwords
 - 🌓 **Light/Dark Mode**: Instant toggle built into the interface
 - 💾 **Offline-Only**: No network access, your data stays with you

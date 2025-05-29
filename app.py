@@ -24,7 +24,6 @@ class App(ctk.CTkToplevel):
         # Set default theme
         ctk.set_appearance_mode("Light")  # Options: "Light", "Dark", "System"
         ctk.set_default_color_theme("dark-blue")
-        self.configure(background="gray9")
         # Initialize components
         self.password_table = PasswordTable(self)
         self.generate_password = GeneratePassword(self)

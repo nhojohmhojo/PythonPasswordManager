@@ -109,7 +109,7 @@ class Database:
             if new_username:
                 entry.username = new_username
             if new_password:
-                entry.password = new_password  # Use hash_password(new_password) if needed
+                entry.password = new_password
 
             self.session.commit()
         except SQLAlchemyError:

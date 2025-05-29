@@ -107,6 +107,8 @@ class Form(tk.LabelFrame):
         self.website_entry.delete(0, END)
         self.username_entry.delete(0, END)
         self.password_entry.delete(0, END)
+        # Success Message
+        messagebox.showinfo("Success", "Your password has been saved.")
 
     def set_theme(self, palette):
         self.configure(bg=palette["bg"])

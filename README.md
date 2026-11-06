@@ -62,11 +62,12 @@ python register_user.py
 ```
 ---
 
-### Docker
+## Docker
 
 Docker run command:
-```docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-container pythonpasswordmanager```
----
+```
+docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-container pythonpasswordmanager
+```
 
 ---
 

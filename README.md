@@ -60,6 +60,13 @@ source venv/bin/activate  # or venv\Scripts\activate on Windows
 pip install -r requirements.txt
 python register_user.py
 ```
+---
+
+### Docker
+
+Docker run command:
+```docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-container pythonpasswordmanager```
+---
 
 ---
 

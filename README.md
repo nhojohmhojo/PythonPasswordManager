@@ -63,10 +63,17 @@ python register_user.py
 ---
 
 ## 🐳 Docker
-
+Dockerfile:
+```
+docker build -t pythonpasswordmanager-image .
+```
+Environment variable:
+```
+set DISAPLY=youripaddress
+```
 Docker run command:
 ```
-docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-container pythonpasswordmanager
+docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-container pythonpasswordmanager-image
 ```
 
 ---

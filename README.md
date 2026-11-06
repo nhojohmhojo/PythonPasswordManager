@@ -80,7 +80,7 @@ docker run -it --rm -e DISPLAY=$env:DISPLAY --name pythonpasswordmanager-contain
 
 ### ✅ Requirements
 
-- Python 3.9 or higher
+- Python 3.11 or higher
 - pip
 
 ---

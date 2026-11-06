@@ -62,7 +62,7 @@ python register_user.py
 ```
 ---
 
-## Docker
+## 🐳 Docker
 
 Docker run command:
 ```

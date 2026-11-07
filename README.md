@@ -63,6 +63,11 @@ python register_user.py
 ---
 
 ## 🐳 Docker
+
+```
+Install Xming X Server for Windows 
+```
+
 Dockerfile:
 ```
 docker build -t pythonpasswordmanager-image .

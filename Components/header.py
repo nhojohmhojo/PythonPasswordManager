@@ -161,6 +161,16 @@ class Header(ctk.CTkFrame):
             )
             return
 
+        # Confirm deletion
+        confirm = messagebox.askyesno(
+            "Confirm Deletion",
+            f"Are you sure you want to delete "
+            f"{len(selected_items)} selected record(s)?"
+        )
+
+        if not confirm:
+            return
+
         db = Database()
         deleted = 0
 

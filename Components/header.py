@@ -30,6 +30,8 @@ class Header(ctk.CTkFrame):
         self.login_window = login_window
         self.password_table = password_table
         self.form = form
+        # Configure search highlighting
+        self.password_table.tag_configure("search_match", background="#FFD966", foreground="#000000")
 
         self.editing_item_id = None
         self.editing_record_id = None
@@ -47,8 +49,8 @@ class Header(ctk.CTkFrame):
         """Creates and places header widgets."""
         self.search_entry = ctk.CTkEntry(self, width=250, placeholder_text="Search passwords...")
         self.search_entry.grid(row=0, column=0, columnspan=2, sticky="w", padx=(6, 0))
-        self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
-        self.search_button.grid(row=0, column=2)
+        # self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
+        # self.search_button.grid(row=0, column=2)
         self.clear_button = ctk.CTkButton(self, text="Clear", width=60, command=self.clear_search)
         self.clear_button.grid(row=0, column=3, padx=5)
         self.delete_button = ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)
@@ -63,21 +65,25 @@ class Header(ctk.CTkFrame):
         self.search_entry.bind("<KeyRelease>", self.search_treeview)
 
     # LIVE SEARCH
+
     def initialize_search(self):
-        """Save original Treeview records."""
+        """Save original Treeview records and tags."""
+
         if self.search_initialized:
             return
 
         self.all_passwords.clear()
 
         for row in self.password_table.get_children():
-            values = self.password_table.item(row, "values")
-            self.all_passwords[row] = values
+            self.all_passwords[row] = {
+                "values": self.password_table.item(row, "values"),
+                "tags": self.password_table.item(row, "tags")
+            }
 
         self.search_initialized = True
 
     def search_treeview(self, event=None):
-        """Filter Treeview records as the user types."""
+        """Filter and highlight Treeview records as the user types."""
 
         # Initialize original records
         self.initialize_search()
@@ -89,25 +95,36 @@ class Header(ctk.CTkFrame):
             self.password_table.delete(row)
 
         # Remove previous selections
-        self.password_table.selection_remove(self.password_table.selection())
+        self.password_table.selection_remove(
+            self.password_table.selection()
+        )
 
         # Repopulate matching records
-        for row, values in self.all_passwords.items():
+        for row, record in self.all_passwords.items():
 
-            # ID = values[0]
-            # Website = values[1]
-            # Username = values[2]
+            values = record["values"]
+            original_tags = record["tags"]
+
+            # Website and Username
             searchable_values = values[1:3]
 
             if any(
-                search_term in str(value).lower()
-                for value in searchable_values
+                    search_term in str(value).lower()
+                    for value in searchable_values
             ):
+
+                # Preserve original tags and add search highlighting
+                tags = original_tags
+
+                if search_term:
+                    tags = (*original_tags, "search_match")
+
                 self.password_table.insert(
                     "",
                     "end",
                     iid=row,
-                    values=values
+                    values=values,
+                    tags=tags
                 )
 
     def clear_search(self):

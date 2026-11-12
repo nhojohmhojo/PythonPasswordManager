@@ -48,9 +48,7 @@ class Header(ctk.CTkFrame):
     def create_header_widgets(self):
         """Creates and places header widgets."""
         self.search_entry = ctk.CTkEntry(self, width=250, placeholder_text="Search passwords...")
-        self.search_entry.grid(row=0, column=0, columnspan=2, sticky="w", padx=(6, 0))
-        # self.search_button = ctk.CTkButton(self, text="Search", width=60, command=self.search_treeview)
-        # self.search_button.grid(row=0, column=2)
+        self.search_entry.grid(row=0, column=0, columnspan=2, sticky="w")
         self.clear_button = ctk.CTkButton(self, text="Clear", width=60, command=self.clear_search)
         self.clear_button.grid(row=0, column=3, padx=5)
         self.delete_button = ctk.CTkButton(self, text="Delete", width=60, command=self.delete_record)

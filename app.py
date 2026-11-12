@@ -16,7 +16,7 @@ from utils import center_window, COLOR_PALETTE
 class App(ctk.CTkToplevel):
     def __init__(self, login_window):
         super().__init__()
-        __version__ = "0.0.1"
+        __version__ = "1.0.0"
         self.title('Password Manager')
         self.minsize(550, 660)
         self.maxsize(550, 660)

@@ -42,6 +42,8 @@ class App(ctk.CTkToplevel):
         self.version_label.pack(side="bottom")
         # Center window
         self.center_window = center_window(self,550, 660)
+        # Close app
+        self.protocol("WM_DELETE_WINDOW", self.close_app)
 
     def toggle_theme(self):
         mode = self.dark_mode_switch.get()
@@ -64,6 +66,11 @@ class App(ctk.CTkToplevel):
         self.header.set_theme(palette)
         self.password_table.set_theme(palette)
         self.generate_password.set_theme(palette)
+
+    def close_app(self):
+        """Completely close the application."""
+        self.quit()
+        self.destroy()
 
 
 

@@ -133,9 +133,7 @@ class Header(ctk.CTkFrame):
 
         self.search_initialized = True
 
-    # -----------------------------------------
     # DELETE RECORD
-    # -----------------------------------------
 
     def delete_record(self):
 
@@ -185,10 +183,7 @@ class Header(ctk.CTkFrame):
         finally:
             db.close()
 
-    # -----------------------------------------
     # EDIT RECORD
-    # -----------------------------------------
-
     def edit_record(self):
 
         selected = self.password_table.selection()
@@ -311,10 +306,8 @@ class Header(ctk.CTkFrame):
         self.editing_record_id = None
         self.editing_item_id = None
 
-    # -----------------------------------------
-    # LOGOUT
-    # -----------------------------------------
 
+    # LOGOUT
     def logout(self):
 
         self.logout_button.configure(state="disabled")
@@ -347,10 +340,8 @@ class Header(ctk.CTkFrame):
         else:
             self.logout_button.configure(state="normal")
 
-    # -----------------------------------------
-    # THEME
-    # -----------------------------------------
 
+    # THEME
     def set_theme(self, palette):
 
         self.configure(bg_color=palette["bg"])
